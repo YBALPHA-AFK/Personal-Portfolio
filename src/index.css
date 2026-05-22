@@ -1,0 +1,237 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cyan: #00daff;
+  --cyan-deep: #0099b8;
+  --cyan-soft: #7aebff;
+  --ink: #05080d;
+  --ink-2: #0a0e15;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-scrolling iframe { pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: smooth; }
+}
+
+html, body, #root {
+  background: #05080d;
+  color: #e9f7fb;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body.has-custom-cursor,
+body.has-custom-cursor a,
+body.has-custom-cursor button {
+  cursor: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #05080d;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00daff, #0099b8);
+  border-radius: 8px;
+  border: 2px solid #05080d;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #7aebff, #00daff);
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 218, 255, 0.35);
+  color: #ffffff;
+}
+
+@layer components {
+  .glass {
+    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(0, 218, 255, 0.12);
+  }
+
+  .glass-strong {
+    background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(0, 218, 255, 0.03));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 218, 255, 0.18);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #00daff 50%, #7aebff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% 200%;
+  }
+
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #00daff 0%, #7aebff 50%, #00daff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% 200%;
+    animation: gradient-x 6s ease infinite;
+  }
+
+  .border-gradient {
+    position: relative;
+    background: #0a0e15;
+    border-radius: 1rem;
+  }
+
+  .border-gradient::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(0, 218, 255, 0.6), rgba(0, 218, 255, 0.05) 40%, rgba(0, 218, 255, 0.6));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .magnetic-button {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .magnetic-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0, 218, 255, 0.5), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .magnetic-button:hover::after {
+    opacity: 1;
+  }
+
+  .shimmer-text {
+    position: relative;
+    background: linear-gradient(90deg, #cfeefb 0%, #ffffff 30%, #00daff 50%, #ffffff 70%, #cfeefb 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 4s linear infinite;
+  }
+
+  .glow-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(10, 14, 21, 0.9), rgba(5, 8, 13, 0.9));
+    border: 1px solid rgba(0, 218, 255, 0.12);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glow-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 218, 255, 0.12), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .glow-card:hover::before {
+    opacity: 1;
+  }
+
+  .glow-card:hover {
+    border-color: rgba(0, 218, 255, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px -20px rgba(0, 218, 255, 0.25);
+  }
+
+  .noise {
+    position: relative;
+  }
+
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  .section-pad {
+    @apply px-6 sm:px-10 lg:px-20 py-24 lg:py-32;
+  }
+
+  .container-max {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-2 rounded-full border border-cyan-glow/20 bg-cyan-glow/5 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-cyan-glow;
+  }
+}
+
+/* Reusable utility for parallax */
+.parallax-slow { will-change: transform; }
+.parallax-fast { will-change: transform; }
+
+/* Hide scrollbar for marquee-like rails */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Image placeholder pattern */
+.img-placeholder {
+  background:
+    linear-gradient(135deg, rgba(0, 218, 255, 0.08), rgba(0, 218, 255, 0.02)),
+    repeating-linear-gradient(
+      45deg,
+      rgba(0, 218, 255, 0.04) 0px,
+      rgba(0, 218, 255, 0.04) 2px,
+      transparent 2px,
+      transparent 12px
+    );
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -70,7 +70,18 @@ const techStack = [
       { name: 'React', slug: 'react', color: '61DAFB' },
       { name: 'Angular', slug: 'angular', color: 'DD0031' },
       { name: 'TensorFlow', slug: 'tensorflow', color: 'FF6F00' },
+      { name: 'PyTorch', slug: 'pytorch', color: 'EE4C2C' },
       { name: 'NumPy', slug: 'numpy', color: '4DABCF' },
+    ],
+  },
+  {
+    name: 'Platforms',
+    items: [
+      { name: 'Vercel', slug: 'vercel', color: 'FFFFFF' },
+      { name: 'Google Cloud', slug: 'googlecloud', color: '4285F4' },
+      { name: 'AWS', slug: 'amazonwebservices', color: 'FF9900', initial: 'A' },
+      { name: 'GitHub', slug: 'github', color: 'FFFFFF' },
+      { name: 'Supabase', slug: 'supabase', color: '3FCF8E' },
     ],
   },
   {

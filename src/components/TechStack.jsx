@@ -75,7 +75,7 @@ const techStack = [
     ],
   },
   {
-    name: 'Platforms',
+    name: 'Cloud Platforms',
     items: [
       { name: 'Vercel', slug: 'vercel', color: 'FFFFFF' },
       { name: 'Google Cloud', slug: 'googlecloud', color: '4285F4' },

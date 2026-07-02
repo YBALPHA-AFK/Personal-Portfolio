@@ -4,7 +4,6 @@ import { ArrowDown, Mail, Linkedin, MapPin, Sparkles as SparklesIcon } from 'luc
 import { profile } from '../data/portfolioData'
 import AnimatedCounter from './AnimatedCounter'
 import SplitText from './SplitText'
-import Magnetic from './Magnetic'
 
 function Typewriter({ phrases, typeSpeed = 60, eraseSpeed = 30, hold = 1800 }) {
   const [text, setText] = useState('')
@@ -171,28 +170,24 @@ export default function Hero() {
               Explore my journey
               <ArrowDown size={16} className="transition-transform group-hover:translate-y-0.5" />
             </a>
-            <Magnetic>
-              <a
-                href={`mailto:${profile.email}`}
-                data-cursor="hover"
-                className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-cyan-glow hover:bg-cyan-glow/10"
-              >
-                <Mail size={16} />
-                Contact
-              </a>
-            </Magnetic>
-            <Magnetic strength={0.3}>
-              <a
-                href={profile.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                data-cursor="hover"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors hover:border-cyan-glow hover:text-cyan-glow"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={16} />
-              </a>
-            </Magnetic>
+            <a
+              href={`mailto:${profile.email}`}
+              data-cursor="hover"
+              className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-cyan-glow hover:bg-cyan-glow/10"
+            >
+              <Mail size={16} />
+              Contact
+            </a>
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              data-cursor="hover"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors hover:border-cyan-glow hover:text-cyan-glow"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={16} />
+            </a>
           </motion.div>
 
           <motion.div

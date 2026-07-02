@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import GlowCard from '../components/GlowCard'
 import ScrollReveal from '../components/ScrollReveal'
+import SplitText from '../components/SplitText'
 
 // Each entry can be filled in later. Set `url` to the external article link
 // (LinkedIn / Medium / Substack / personal blog) — the card opens in a new tab.
@@ -54,11 +55,16 @@ export default function BlogPage() {
                 </span>
               </ScrollReveal>
 
-              <ScrollReveal distance={70}>
-                <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-                  <span className="text-gradient">Thinking out loud.</span>
-                </h1>
-              </ScrollReveal>
+              <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+                <SplitText
+                  text="Thinking out loud."
+                  by="word"
+                  stagger={0.08}
+                  delay={0.1}
+                  hoverLift={false}
+                  unitClassName="text-gradient"
+                />
+              </h1>
 
               <ScrollReveal distance={50}>
                 <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">

@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
 import { ArrowDown, Mail, Linkedin, MapPin, Sparkles as SparklesIcon } from 'lucide-react'
 import { profile } from '../data/portfolioData'
 import AnimatedCounter from './AnimatedCounter'
+import SplitText from './SplitText'
+import Magnetic from './Magnetic'
 
 function Typewriter({ phrases, typeSpeed = 60, eraseSpeed = 30, hold = 1800 }) {
   const [text, setText] = useState('')
@@ -62,19 +64,35 @@ export default function Hero() {
   }
   const resetTilt = () => setTilt({ rx: 0, ry: 0 })
 
+  // Aurora parallax — the two glow fields drift gently against the cursor,
+  // giving the backdrop real depth. Normalized pointer position → springs.
+  const pmx = useMotionValue(0)
+  const pmy = useMotionValue(0)
+  const auroraX1 = useSpring(useTransform(pmx, [-1, 1], [36, -36]), { stiffness: 40, damping: 20 })
+  const auroraY1 = useSpring(useTransform(pmy, [-1, 1], [24, -24]), { stiffness: 40, damping: 20 })
+  const auroraX2 = useSpring(useTransform(pmx, [-1, 1], [-48, 48]), { stiffness: 40, damping: 20 })
+  const auroraY2 = useSpring(useTransform(pmy, [-1, 1], [-30, 30]), { stiffness: 40, damping: 20 })
+  const handlePointer = (e) => {
+    pmx.set((e.clientX / window.innerWidth) * 2 - 1)
+    pmy.set((e.clientY / window.innerHeight) * 2 - 1)
+  }
+
   return (
     <section
       id="hero"
       ref={ref}
+      onMouseMove={handlePointer}
       className="relative min-h-[100svh] overflow-hidden pt-28 sm:pt-32"
     >
-      {/* aurora accents */}
-      <div
+      {/* aurora accents — cursor-parallaxed */}
+      <motion.div
         aria-hidden
+        style={{ x: auroraX1, y: auroraY1 }}
         className="pointer-events-none absolute -top-32 left-1/2 -z-0 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-cyan-glow/15 blur-[120px]"
       />
-      <div
+      <motion.div
         aria-hidden
+        style={{ x: auroraX2, y: auroraY2 }}
         className="pointer-events-none absolute bottom-0 right-[-10%] -z-0 h-[420px] w-[520px] rounded-full bg-cyan-deep/15 blur-[140px]"
       />
 
@@ -94,24 +112,29 @@ export default function Hero() {
             Available for partnerships & mentorship
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-5xl font-bold leading-[1] tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl"
-          >
-            <span className="block text-white/95">Suhaan</span>
+          <h1 className="font-display text-5xl font-bold leading-[1] tracking-tight sm:text-6xl lg:text-7xl xl:text-8xl">
+            <SplitText
+              text="Suhaan"
+              delay={0.2}
+              stagger={0.045}
+              className="block text-white/95"
+            />
             <span className="block">
-              <span className="text-gradient-cyan">Meerapatel</span>
+              <SplitText
+                text="Meerapatel"
+                delay={0.45}
+                stagger={0.04}
+                unitClassName="bg-gradient-to-br from-cyan-glow via-cyan-soft to-cyan-glow bg-clip-text text-transparent"
+              />
               <motion.span
                 aria-hidden
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 1, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 className="ml-3 inline-block h-2 w-16 origin-left rounded-full bg-cyan-glow shadow-glow"
               />
             </span>
-          </motion.h1>
+          </h1>
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -148,24 +171,28 @@ export default function Hero() {
               Explore my journey
               <ArrowDown size={16} className="transition-transform group-hover:translate-y-0.5" />
             </a>
-            <a
-              href={`mailto:${profile.email}`}
-              data-cursor="hover"
-              className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-cyan-glow hover:bg-cyan-glow/10"
-            >
-              <Mail size={16} />
-              Contact
-            </a>
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              data-cursor="hover"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors hover:border-cyan-glow hover:text-cyan-glow"
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={16} />
-            </a>
+            <Magnetic>
+              <a
+                href={`mailto:${profile.email}`}
+                data-cursor="hover"
+                className="inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-cyan-glow hover:bg-cyan-glow/10"
+              >
+                <Mail size={16} />
+                Contact
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.3}>
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="hover"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/80 transition-colors hover:border-cyan-glow hover:text-cyan-glow"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={16} />
+              </a>
+            </Magnetic>
           </motion.div>
 
           <motion.div
@@ -207,7 +234,7 @@ export default function Hero() {
             animate={{ rotateX: tilt.rx, rotateY: tilt.ry }}
             transition={{ type: 'spring', stiffness: 200, damping: 20 }}
             style={{ transformStyle: 'preserve-3d' }}
-            className="relative rounded-[1.75rem] border border-cyan-glow/25 bg-ink-800/80 p-3 backdrop-blur-xl"
+            className="border-beam relative rounded-[1.75rem] border border-cyan-glow/25 bg-ink-800/80 p-3 backdrop-blur-xl"
             data-cursor="hover"
           >
             {/* Headshot */}

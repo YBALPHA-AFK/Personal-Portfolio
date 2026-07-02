@@ -53,19 +53,40 @@ function TimelineItem({ item, index }) {
       distance={60}
       className="relative grid grid-cols-[40px_1fr] gap-4 lg:grid-cols-2 lg:gap-12"
     >
-      {/* Node */}
+      {/* Node — powers on as the glowing spine reaches it */}
       <div
         className={`relative flex justify-center lg:absolute lg:left-1/2 lg:top-8 lg:-translate-x-1/2`}
       >
-        <span className="absolute h-12 w-12 rounded-full bg-cyan-glow/20 blur-xl" />
-        <span className="relative grid h-10 w-10 place-items-center rounded-full border border-cyan-glow/40 bg-ink-900 text-cyan-glow shadow-glow-sm">
+        <motion.span
+          initial={{ opacity: 0, scale: 0 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: '0px 0px -120px 0px' }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="absolute h-12 w-12 rounded-full bg-cyan-glow/20 blur-xl"
+        />
+        <motion.span
+          initial={{ scale: 0.3, opacity: 0.3 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          viewport={{ once: true, margin: '0px 0px -120px 0px' }}
+          transition={{ type: 'spring', stiffness: 260, damping: 14, delay: 0.1 }}
+          className="relative grid h-10 w-10 place-items-center rounded-full border border-cyan-glow/40 bg-ink-900 text-cyan-glow shadow-glow-sm"
+        >
           <Icon size={16} />
+          {/* single expanding pulse when the node activates */}
+          <motion.span
+            aria-hidden
+            initial={{ scale: 1, opacity: 0 }}
+            whileInView={{ scale: [1, 2.2], opacity: [0.7, 0] }}
+            viewport={{ once: true, margin: '0px 0px -120px 0px' }}
+            transition={{ duration: 1.1, delay: 0.25, ease: 'easeOut' }}
+            className="pointer-events-none absolute inset-0 rounded-full border border-cyan-glow"
+          />
           {item.badge && (
             <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full border-2 border-ink-900 bg-emerald-400">
               <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/70" />
             </span>
           )}
-        </span>
+        </motion.span>
       </div>
 
       {/* Card slot */}

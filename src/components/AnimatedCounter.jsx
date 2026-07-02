@@ -16,6 +16,8 @@ function parseValue(value) {
 
 function formatNumber(n, original) {
   const isInt = Number.isInteger(original)
+  // Years like 2029 must render without grouping separators ("2029", not "2,029")
+  if (isInt && original >= 1000 && original <= 9999) return String(Math.round(n))
   if (isInt) return Math.round(n).toLocaleString()
   return n.toFixed(1)
 }

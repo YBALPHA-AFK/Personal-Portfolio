@@ -3,6 +3,7 @@ import { Mail, Linkedin, MapPin, ArrowUpRight, Copy, Check } from 'lucide-react'
 import { useState } from 'react'
 import { profile } from '../data/portfolioData'
 import SectionHeading from './SectionHeading'
+import Magnetic from './Magnetic'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
@@ -18,7 +19,7 @@ export default function Contact() {
   return (
     <section id="contact" className="section-pad relative">
       <div className="container-max">
-        <div className="relative overflow-hidden rounded-3xl border border-cyan-glow/20 bg-ink-800/60 backdrop-blur-xl">
+        <div className="border-beam relative overflow-hidden rounded-3xl border border-cyan-glow/20 bg-ink-800/60 backdrop-blur-xl">
           {/* gradient flourishes */}
           <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-cyan-glow/30 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-cyan-deep/30 blur-3xl" />
@@ -42,26 +43,30 @@ export default function Contact() {
               />
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
-                <a
-                  href={`mailto:${profile.email}`}
-                  data-cursor="hover"
-                  className="magnetic-button inline-flex items-center gap-2 rounded-full bg-cyan-glow px-6 py-3.5 text-sm font-semibold text-ink-900 shadow-glow transition-transform hover:scale-[1.03]"
-                >
-                  <Mail size={16} />
-                  Send an email
-                  <ArrowUpRight size={14} />
-                </a>
-                <a
-                  href={profile.linkedin}
-                  target="_blank"
-                  rel="noreferrer"
-                  data-cursor="hover"
-                  className="magnetic-button inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:border-cyan-glow hover:bg-cyan-glow/10"
-                >
-                  <Linkedin size={16} />
-                  LinkedIn
-                  <ArrowUpRight size={14} />
-                </a>
+                <Magnetic>
+                  <a
+                    href={`mailto:${profile.email}`}
+                    data-cursor="hover"
+                    className="magnetic-button inline-flex items-center gap-2 rounded-full bg-cyan-glow px-6 py-3.5 text-sm font-semibold text-ink-900 shadow-glow transition-transform hover:scale-[1.03]"
+                  >
+                    <Mail size={16} />
+                    Send an email
+                    <ArrowUpRight size={14} />
+                  </a>
+                </Magnetic>
+                <Magnetic>
+                  <a
+                    href={profile.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-cursor="hover"
+                    className="magnetic-button inline-flex items-center gap-2 rounded-full border border-cyan-glow/30 bg-cyan-glow/5 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:border-cyan-glow hover:bg-cyan-glow/10"
+                  >
+                    <Linkedin size={16} />
+                    LinkedIn
+                    <ArrowUpRight size={14} />
+                  </a>
+                </Magnetic>
               </div>
             </div>
 

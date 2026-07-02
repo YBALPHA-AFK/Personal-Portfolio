@@ -16,6 +16,7 @@ import {
   ChevronRight,
 } from 'lucide-react'
 import ScrollReveal from '../components/ScrollReveal'
+import SplitText from '../components/SplitText'
 
 const filters = [
   { id: 'all', label: 'All', icon: Grid3x3 },
@@ -144,11 +145,16 @@ export default function GalleryPage() {
             </span>
           </ScrollReveal>
 
-          <ScrollReveal distance={70}>
-            <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-              <span className="text-gradient">Moments worth keeping.</span>
-            </h1>
-          </ScrollReveal>
+          <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+            <SplitText
+              text="Moments worth keeping."
+              by="word"
+              stagger={0.08}
+              delay={0.1}
+              hoverLift={false}
+              unitClassName="text-gradient"
+            />
+          </h1>
 
           <ScrollReveal distance={50}>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">

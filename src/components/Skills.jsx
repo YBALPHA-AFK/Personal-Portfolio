@@ -1,4 +1,13 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import {
+  motion,
+  useAnimationFrame,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+  useVelocity,
+} from 'framer-motion'
 import { skills, languages } from '../data/portfolioData'
 import SectionHeading from './SectionHeading'
 import ScrollReveal from './ScrollReveal'
@@ -71,6 +80,15 @@ export default function Skills() {
   )
 }
 
+// Wrap v into [min, max) — keeps the marquee's translate% in a seamless loop.
+const wrap = (min, max, v) => min + ((((v - min) % (max - min)) + (max - min)) % (max - min))
+
+/**
+ * Scroll-velocity-reactive marquee: drifts on its own, but scrolling
+ * accelerates it, scrolling up reverses it, and fast flicks skew the
+ * whole rail like it's catching g-force. Words are stroke-only type
+ * that floods cyan under the cursor.
+ */
 function Marquee() {
   const items = [
     'Leadership',
@@ -88,6 +106,36 @@ function Marquee() {
   ]
   const stream = [...items, ...items]
 
+  const baseX = useMotionValue(0)
+  const { scrollY } = useScroll()
+  const scrollVelocity = useVelocity(scrollY)
+  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 })
+  // multiplies base drift; sign flips travel direction with scroll direction
+  const velocityFactor = useTransform(smoothVelocity, [-1200, 1200], [-4, 4], { clamp: false })
+  const skewX = useSpring(useTransform(smoothVelocity, [-1200, 1200], [8, -8]), {
+    damping: 40,
+    stiffness: 300,
+  })
+
+  const directionRef = useRef(1)
+  const reducedRef = useRef(
+    typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+
+  useAnimationFrame((_, delta) => {
+    if (reducedRef.current) return
+    const vf = velocityFactor.get()
+    if (vf < 0) directionRef.current = -1
+    else if (vf > 0) directionRef.current = 1
+
+    let moveBy = directionRef.current * 1.6 * (delta / 1000) // % per second base drift
+    moveBy += moveBy * Math.abs(vf)
+    baseX.set(wrap(-50, 0, baseX.get() + moveBy))
+  })
+
+  const x = useTransform(baseX, (v) => `${v}%`)
+
   return (
     <div
       className="relative mt-16 overflow-hidden"
@@ -98,17 +146,19 @@ function Marquee() {
           'linear-gradient(90deg, transparent, black 12%, black 88%, transparent)',
       }}
     >
-      <div className="flex w-max animate-marquee gap-6 py-2">
+      <motion.div style={{ x, skewX }} className="flex w-max gap-6 py-2 will-change-transform">
         {stream.map((it, i) => (
           <span
             key={i}
-            className="flex shrink-0 items-center gap-3 font-display text-3xl font-semibold text-white/15 sm:text-4xl"
+            className="flex shrink-0 items-center gap-3 font-display text-3xl font-semibold sm:text-4xl"
           >
-            {it}
+            <span className="text-outline cursor-default" data-cursor="hover">
+              {it}
+            </span>
             <span className="h-1.5 w-1.5 rounded-full bg-cyan-glow/50" />
           </span>
         ))}
-      </div>
+      </motion.div>
     </div>
   )
 }

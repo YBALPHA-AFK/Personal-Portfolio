@@ -12,6 +12,7 @@ import {
 import { experience, profile } from '../data/portfolioData'
 import GlowCard from '../components/GlowCard'
 import ScrollReveal from '../components/ScrollReveal'
+import SplitText from '../components/SplitText'
 
 // Group consecutive entries with the same org so a multi-role arc (e.g. DECA)
 // renders under one header with a connecting timeline rail.
@@ -48,11 +49,16 @@ export default function ExperiencesPage() {
             </span>
           </ScrollReveal>
 
-          <ScrollReveal distance={70}>
-            <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-              <span className="text-gradient">A leadership timeline.</span>
-            </h1>
-          </ScrollReveal>
+          <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+            <SplitText
+              text="A leadership timeline."
+              by="word"
+              stagger={0.08}
+              delay={0.1}
+              hoverLift={false}
+              unitClassName="text-gradient"
+            />
+          </h1>
 
           <ScrollReveal distance={50}>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">

@@ -33,7 +33,14 @@ export default function useMagnetic({ strength = 0.25, radius = 120 } = {}) {
       const dx = e.clientX - cx
       const dy = e.clientY - cy
       const dist = Math.hypot(dx, dy)
-      if (dist > radius + Math.max(r.width, r.height) / 2) return
+      if (dist > radius + Math.max(r.width, r.height) / 2) {
+        // Cursor left the magnetic field — release, don't keep following.
+        if (target.x !== 0 || target.y !== 0) {
+          target = { x: 0, y: 0 }
+          if (!raf) raf = requestAnimationFrame(animateFrame)
+        }
+        return
+      }
       target = { x: dx * strength, y: dy * strength }
 
       const mx = ((e.clientX - r.left) / r.width) * 100

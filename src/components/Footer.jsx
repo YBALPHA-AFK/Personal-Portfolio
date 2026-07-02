@@ -6,8 +6,24 @@ export default function Footer() {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
   return (
-    <footer className="relative border-t border-white/5 bg-ink-950/60 backdrop-blur">
-      <div className="container-max flex flex-col gap-8 px-6 py-12 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-20">
+    <footer className="relative overflow-hidden border-t border-white/5 bg-ink-950/60 backdrop-blur">
+      {/* giant outlined watermark — pure decoration, screen-reader hidden */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -bottom-6 select-none overflow-hidden"
+      >
+        <p
+          className="whitespace-nowrap text-center font-display text-[18vw] font-bold leading-none tracking-tight lg:text-[13rem]"
+          style={{
+            color: 'transparent',
+            WebkitTextStroke: '1px rgba(0, 218, 255, 0.07)',
+          }}
+        >
+          {profile.name}
+        </p>
+      </div>
+
+      <div className="container-max relative flex flex-col gap-8 px-6 py-12 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-20">
         <div>
           <p className="font-display text-2xl font-bold text-white">{profile.name}</p>
           <p className="mt-1 text-sm text-white/72">
@@ -39,7 +55,7 @@ export default function Footer() {
         </button>
       </div>
 
-      <div className="border-t border-white/5">
+      <div className="relative border-t border-white/5">
         <div className="container-max flex flex-col items-center justify-between gap-3 px-6 py-5 text-xs text-white/58 sm:flex-row sm:px-10 lg:px-20">
           <p>© {new Date().getFullYear()} {profile.name}. Immersed In Knowledge, Committed To Excellence.</p>
           <p className="font-mono uppercase tracking-[0.25em]">React · Tailwind · Framer Motion</p>

@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import { AnimatePresence } from 'framer-motion'
 import SmoothScroll from './components/SmoothScroll'
-import MatrixHover from './components/MatrixHover'
 import CustomCursor from './components/CustomCursor'
 import ScrollProgress from './components/ScrollProgress'
+import Spotlight from './components/Spotlight'
+import PageTransition from './components/PageTransition'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Sparkles from './components/Sparkles'
@@ -21,6 +23,28 @@ function ScrollToTop() {
   return null
 }
 
+// Keyed on the pathname so AnimatePresence can cross-fade routes —
+// old page animates out, new page sweeps in (see PageTransition).
+function AnimatedRoutes() {
+  const location = useLocation()
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <PageTransition key={location.pathname} id={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<AboutPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/experiences" element={<ExperiencesPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="*" element={<AboutPage />} />
+        </Routes>
+      </PageTransition>
+    </AnimatePresence>
+  )
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -32,26 +56,21 @@ export default function App() {
           <Sparkles density={0.00006} />
         </div>
 
-        <MatrixHover />
+        <Spotlight />
         <CustomCursor />
         <ScrollProgress />
         <Navbar />
 
         <main className="relative z-10">
-          <Routes>
-            <Route path="/" element={<AboutPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/experiences" element={<ExperiencesPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="*" element={<AboutPage />} />
-          </Routes>
+          <AnimatedRoutes />
         </main>
 
         <div className="relative z-10">
           <Footer />
         </div>
+
+        {/* Film grain — the last layer, above everything, purely atmospheric */}
+        <div aria-hidden className="grain-fixed z-[70]" />
       </div>
     </BrowserRouter>
   )

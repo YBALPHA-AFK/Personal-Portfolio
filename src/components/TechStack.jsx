@@ -163,7 +163,10 @@ function ClaudeSpecialistCard() {
   const current = claudeVariants[index]
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-orange-400/30 bg-gradient-to-br from-orange-500/10 via-ink-900/80 to-amber-700/10 px-6 py-12 backdrop-blur-xl sm:px-10 sm:py-16 lg:px-14 lg:py-20">
+    <div
+      className="border-beam relative overflow-hidden rounded-3xl border border-orange-400/30 bg-gradient-to-br from-orange-500/10 via-ink-900/80 to-amber-700/10 px-6 py-12 backdrop-blur-xl sm:px-10 sm:py-16 lg:px-14 lg:py-20"
+      style={{ '--beam-c1': '#ffb38a', '--beam-c2': 'rgba(217,119,87,0.45)' }}
+    >
       {/* glow accents */}
       <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-orange-400/30 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-amber-500/20 blur-3xl" />

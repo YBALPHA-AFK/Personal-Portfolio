@@ -69,7 +69,7 @@ export default function StarJourney() {
 
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         {/* Star — layered, masked, breathing (CSS in index.css) */}
-        <div className="star-wrap h-[min(72vh,44rem)] w-[min(72vh,44rem)] shrink-0">
+        <div className="star-wrap h-[min(92vh,58rem)] w-[min(92vh,58rem)] shrink-0">
           <img
             src="/star.png"
             alt=""

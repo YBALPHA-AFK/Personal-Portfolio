@@ -1,4 +1,5 @@
 import Hero from '../components/Hero'
+import StarJourney from '../components/StarJourney'
 import About from '../components/About'
 import Experience from '../components/Experience'
 import Achievements from '../components/Achievements'
@@ -14,6 +15,7 @@ export default function AboutPage() {
   return (
     <>
       <Hero />
+      <StarJourney />
       <SectionDivider label="01 · about" />
       <About />
       <SectionDivider label="02 · experience" />

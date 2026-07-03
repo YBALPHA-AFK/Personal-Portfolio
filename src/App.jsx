@@ -50,7 +50,9 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       <SmoothScroll />
-      <div className="relative min-h-screen overflow-hidden text-white">
+      {/* overflow-x-clip (not overflow-hidden) — hidden would create a scroll
+          container and break position:sticky used by StarJourney */}
+      <div className="relative min-h-screen overflow-x-clip text-white">
         {/* Global starry sparkles — sits behind all content, fixed to viewport */}
         <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
           <Sparkles density={0.00006} />

@@ -311,22 +311,6 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* scroll cue */}
-      <motion.a
-        href="#about"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-white/68 sm:flex"
-        data-cursor="hover"
-      >
-        Scroll
-        <motion.span
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-          className="h-8 w-px bg-gradient-to-b from-cyan-glow to-transparent"
-        />
-      </motion.a>
     </section>
   )
 }

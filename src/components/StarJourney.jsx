@@ -33,7 +33,7 @@ function Word({ progress, range, children }) {
     <motion.span
       aria-hidden
       style={{ opacity, scale, y, filter: blur }}
-      className="absolute inset-x-0 text-center font-display text-6xl font-bold tracking-tight sm:text-7xl lg:text-8xl"
+      className="col-start-1 row-start-1 text-center font-display text-6xl font-bold tracking-tight sm:text-7xl lg:text-8xl"
     >
       {/* dark drop-shadow halo keeps the words readable over the star's
           bright core (text-shadow would paint over a bg-clip:text fill) */}
@@ -89,8 +89,9 @@ export default function StarJourney() {
           />
         </div>
 
-        {/* Words — scrubbed by scroll while the star is pinned */}
-        <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2">
+        {/* Words — scrubbed by scroll while the star is pinned.
+            Grid stacks all three in the same cell, dead-center on the star. */}
+        <div className="pointer-events-none absolute inset-0 grid place-items-center">
           <Word progress={scrollYProgress} range={[0.18, 0.42]}>
             Shoot
           </Word>

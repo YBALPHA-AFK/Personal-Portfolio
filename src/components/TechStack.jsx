@@ -79,7 +79,8 @@ const techStack = [
     items: [
       { name: 'Vercel', slug: 'vercel', color: 'FFFFFF' },
       { name: 'Google Cloud', slug: 'googlecloud', color: '4285F4' },
-      { name: 'AWS', slug: 'amazonwebservices', color: 'FF9900', initial: 'A' },
+      // Simple Icons dropped the AWS mark (trademark) — use the initial chip
+      { name: 'AWS', slug: null, color: 'FF9900', initial: 'A' },
       { name: 'GitHub', slug: 'github', color: 'FFFFFF' },
       { name: 'Supabase', slug: 'supabase', color: '3FCF8E' },
     ],

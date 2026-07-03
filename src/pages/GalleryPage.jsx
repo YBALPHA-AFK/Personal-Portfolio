@@ -56,7 +56,7 @@ const photos = [
   { size: 'lg', src: '/gallery/IMG_4668.jpg', focus: '50% 30%', category: 'events', caption: 'Mason St. Jean - 25-26 SRVP' },
   { size: 'sm', src: '/gallery/IMG_4654.jpg', focus: '60% 22%', category: 'bts', caption: 'Cullen Watanuki - 25-26 CRVP' },
   { size: 'sm', category: 'team', caption: 'Reaction' },
-  { size: 'md', src: '/gallery/IMG_4638.jpg', focus: '60% 30%', category: 'competitions', caption: 'Conference floor' },
+  { size: 'md', src: '/gallery/IMG_4637.jpg', focus: '60% 30%', category: 'competitions', caption: 'Conference floor' },
   { size: 'wide', category: 'events', caption: 'Crowd shot' },
   { size: 'sm', category: 'competitions', caption: 'Award close-up' },
   { size: 'sm', category: 'events', caption: 'Hand-off' },
@@ -339,8 +339,11 @@ export default function GalleryPage() {
 
 function Tile({ photo, aspect, index, onOpen }) {
   const [loaded, setLoaded] = useState(false)
-  const hasImage = Boolean(photo.src)
-  const clickable = Boolean(onOpen)
+  const [failed, setFailed] = useState(false)
+  // A photo that 404s falls back to the styled placeholder instead of
+  // leaving a blank skeleton tile.
+  const hasImage = Boolean(photo.src) && !failed
+  const clickable = Boolean(onOpen) && hasImage
 
   return (
     <div
@@ -367,6 +370,7 @@ function Tile({ photo, aspect, index, onOpen }) {
               loading="lazy"
               decoding="async"
               onLoad={() => setLoaded(true)}
+              onError={() => setFailed(true)}
               style={{ objectPosition: photo.focus || 'center' }}
               className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ${
                 loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
